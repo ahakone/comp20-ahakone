@@ -1,5 +1,5 @@
-Implemented correctly:
-Implemented incorrectly:
+Implemented correctly: All 5 screen widths. Used only one image file. 
+Implemented incorrectly: N/A
 
 Collaborated/Discussed: N/A
 
