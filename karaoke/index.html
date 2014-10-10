@@ -18,34 +18,37 @@
 		lyrics = new Array();
 		lyrics[0] = "Oh, I could hide 'neath the wings </br> \
 					Of the bluebird as she sings. </br> \
-					The six o'clock alarm would never ring."; 
+					The six o'clock alarm would never ring. </br>"; 
 		lyrics[1] = "But it rings and I rise, </br> \
 					Wipe the sleep out of my eyes. </br> \
-					My shavin' razor's cold and it stings.";
+					My shavin' razor's cold and it stings. </br>";
 		lyrics[2] = "Cheer up, Sleepy Jean. </br> \
 					Oh, what can it mean. </br> \
 					To a daydream believer </br> \
-					And a homecoming queen.";
+					And a homecoming queen. </br>";
 		lyrics[3] = "You once thought of me </br> \
 					As a white knight on a steed. </br> \
-					Now you know how happy I can be.";
+					Now you know how happy I can be.</br>";
 		lyrics[4] = "Oh, and our good times start and end </br> \
 					Without dollar one to spend. </br> \
-					But how much, baby, do we really need.";
+					But how much, baby, do we really need. </br>";
 		lyrics[5] = "Cheer up, Sleepy Jean. </br> \
 					Oh, what can it mean. </br> \
 					To a daydream believer </br> \
 					And a homecoming queen. </br> \
-					[Repeat]";
-		lyrics[6] = "[Instrumental interlude]";
+					[Repeat] </br>";
+		lyrics[6] = "[Instrumental interlude] </br>";
 		lyrics[7] = "Cheer up, Sleepy Jean. </br> \
 					Oh, what can it mean. </br> \
 					To a daydream believer </br> \
 					And a homecoming queen. </br> \
-					[Repeat and fade]";
+					[Repeat and fade] </br>";
 	}
 
 	function modifyLyrics() {
+		img = "'' ";
+		caption = "''";
+
 		if (music.currentTime <= 21 && music.currentTime > 0) {
 			i = 0;
 		}
@@ -54,6 +57,8 @@
 		}
 		else if (music.currentTime <= 54 && music.currentTime > 36) {
 			i = 2;
+			img = "'sleepy_puppies.jpg' ";
+			caption = "'Sleepy puppies'";
 		}
 		else if (music.currentTime <= 68 && music.currentTime > 54) {
 			i = 3;
@@ -63,17 +68,18 @@
 		}
 		else if (music.currentTime <= 120 && music.currentTime > 83) {
 			i = 5;
+			img = "'princess_puppy.jpg' ";
+			caption = "'Princess puppy'";
 		}
 		else if (music.currentTime <= 126 && music.currentTime > 120) {
 			i = 6;
 		}
 		else {
 			i = 7;
+			img = "'kissing_puppies.jpg' ";
+			caption = "'Kissing puppies'";
 		}
-		var le = document.getElementById("lyrics");
-		le.innerHTML = lyrics[i];
-//		le.innerHTML = 
-
+		document.getElementById("lyrics").innerHTML = lyrics[i] + "<img src=" + img + "alt=" + caption + "/>";
 	}
 	setLyrics();
 	var music = document.getElementById("music_video");
