@@ -14,30 +14,36 @@
 <div id="lyrics"></div>
 
 <script>
-
-	lyrics = new Array();
-	lyrics[0] = "Oh, I could hide 'neath the wings </br> \
-				Of the bluebird as she sings. </br> \
-				The six o'clock alarm would never ring."; 
-	lyrics[1] = "But it rings and I rise, </br> \
-				Wipe the sleep out of my eyes. </br> \
-				My shavin' razor's cold and it stings.";
-	lyrics[2] = "Cheer up, Sleepy Jean. </br> \
-				Oh, what can it mean. </br> \
-				To a daydream believer </br> \
-				And a homecoming queen.";
-	lyrics[3] = "You once thought of me </br> \
-				As a white knight on a steed. </br> \
-				Now you know how happy I can be.";
-	lyrics[4] = "Oh, and our good times start and end </br> \
-				Without dollar one to spend. </br> \
-				But how much, baby, do we really need.";
-	lyrics[5] = "[Instrumental interlude]";
-	lyrics[6] = "Cheer up, Sleepy Jean. </br> \
-				Oh, what can it mean. </br> \
-				To a daydream believer </br> \
-				And a homecoming queen. </br> \
-				[Repeat and fade]";
+	function setLyrics() {
+		lyrics = new Array();
+		lyrics[0] = "Oh, I could hide 'neath the wings </br> \
+					Of the bluebird as she sings. </br> \
+					The six o'clock alarm would never ring."; 
+		lyrics[1] = "But it rings and I rise, </br> \
+					Wipe the sleep out of my eyes. </br> \
+					My shavin' razor's cold and it stings.";
+		lyrics[2] = "Cheer up, Sleepy Jean. </br> \
+					Oh, what can it mean. </br> \
+					To a daydream believer </br> \
+					And a homecoming queen.";
+		lyrics[3] = "You once thought of me </br> \
+					As a white knight on a steed. </br> \
+					Now you know how happy I can be.";
+		lyrics[4] = "Oh, and our good times start and end </br> \
+					Without dollar one to spend. </br> \
+					But how much, baby, do we really need.";
+		lyrics[5] = "Cheer up, Sleepy Jean. </br> \
+					Oh, what can it mean. </br> \
+					To a daydream believer </br> \
+					And a homecoming queen. </br> \
+					[Repeat]";
+		lyrics[6] = "[Instrumental interlude]";
+		lyrics[7] = "Cheer up, Sleepy Jean. </br> \
+					Oh, what can it mean. </br> \
+					To a daydream believer </br> \
+					And a homecoming queen. </br> \
+					[Repeat and fade]";
+	}
 
 	function modifyLyrics() {
 		if (music.currentTime <= 21 && music.currentTime > 0) {
@@ -46,10 +52,30 @@
 		else if (music.currentTime <= 36 && music.currentTime > 21) {
 			i = 1;
 		}
-		document.getElementById("lyrics").innerHTML = lyrics[i];
-		//music.currentTime;
-	}
+		else if (music.currentTime <= 54 && music.currentTime > 36) {
+			i = 2;
+		}
+		else if (music.currentTime <= 68 && music.currentTime > 54) {
+			i = 3;
+		}
+		else if (music.currentTime <= 83 && music.currentTime > 68) {
+			i = 4;
+		}
+		else if (music.currentTime <= 120 && music.currentTime > 83) {
+			i = 5;
+		}
+		else if (music.currentTime <= 126 && music.currentTime > 120) {
+			i = 6;
+		}
+		else {
+			i = 7;
+		}
+		var le = document.getElementById("lyrics");
+		le.innerHTML = lyrics[i];
+//		le.innerHTML = 
 
+	}
+	setLyrics();
 	var music = document.getElementById("music_video");
 	music.addEventListener("timeupdate", modifyLyrics);
 
