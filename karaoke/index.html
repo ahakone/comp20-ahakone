@@ -14,7 +14,51 @@
 <div id="lyrics"></div>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+
+
+
+	lyrics = new Array();
+	lyrics[0] = "Oh, I could hide 'neath the wings </br> 
+				Of the bluebird as she sings. </br>
+				The six o'clock alarm would never ring."; 
+	lyrics[1] = "But it rings and I rise, </br>
+				Wipe the sleep out of my eyes. </br>
+				My shavin' razor's cold and it stings.";
+	lyrics[2] = "Cheer up, Sleepy Jean. </br>
+				Oh, what can it mean. </br>
+				To a daydream believer </br>
+				And a homecoming queen.";
+	lyrics[3] = "You once thought of me </br>
+				As a white knight on a steed. </br>
+				Now you know how happy I can be.";
+	lyrics[4] = "Oh, and our good times start and end </br>
+				Without dollar one to spend. </br>
+				But how much, baby, do we really need.";
+	lyrics[5] = "Cheer up, Sleepy Jean. </br>
+				Oh, what can it mean. </br>
+				To a daydream believer </br>
+				And a homecoming queen.";
+	lyrics[6] = "Cheer up, Sleepy Jean. </br>
+				Oh, what can it mean. </br>
+				To a daydream believer </br>
+				And a homecoming queen.";
+	lyrics[7] = "[Instrumental interlude]";
+	lyrics[8] = "Cheer up, Sleepy Jean. </br>
+				Oh, what can it mean. </br>
+				To a daydream believer </br>
+				And a homecoming queen. </br>
+				[Repeat and fade]";
+
+
+	function modifyLyrics() {
+		var line = document.getElementById("lyrics");
+		line.innerHTML = lyrics[0];
+		//music.currentTime;
+	}
+
+	var music = document.getElementById("music_video");
+	music.addEventListener("timeupdate", modifyLyrics);
+
 </script>
 </body>
 </html>	
