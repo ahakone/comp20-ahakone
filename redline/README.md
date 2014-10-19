@@ -1,5 +1,5 @@
-Implemented correctly:
-Implemented incorrectly: 
+Implemented correctly: Displays a Google Map
+Implemented incorrectly: MBTA Redline location cannot be displayed since cannot get real-time data from the .json file
 
 Collaborated with: N/A
 

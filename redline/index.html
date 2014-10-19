@@ -20,7 +20,7 @@
 	        	};
 	        	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	        	request.open("get", "http://developer.mbta.com/lib/rthr/red.json", true);
-	        	if (request.readyState == 4) {
+	        	if (request.readyState == 4 && request.status == 200) {
 	        		renderMap();
 	        	}
 	        	getMyLocation();
@@ -42,21 +42,19 @@
 
 			function renderMap()
 			{
-				// Create a marker change this
-				// marker = new google.maps.Marker({
-				// 	position: me,
-				// 	title: "Here I Am!"
-				// });
-				// marker.setMap(map);
-				
-				// Calling Google Places API
-				// var request = {
-				// 	location: me,
-				// 	radius: '500',
-				// 	types: ['food']
-				// };
-				// service = new google.maps.places.PlacesService(map);
-				// service.search(request, callback);
+				mbtaData = JSON.parse(request.responseText);
+
+				createMarker();
+
+			}
+
+			function createMarker(latitude, longitude)
+			{
+				var markerLoc = new google.maps.LatLng(latitude, longitude);
+				var marker = new google.maps.Marker({
+					map: map,
+					position: markerLoc
+				});
 			}
 
 		</script>
