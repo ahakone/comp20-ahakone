@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>Upcoming Trains</title>
+	<script>
+		var xhr;
+
+		function init() {
+			xhr = new XMLHttpRequest();
+			xhr.open("get", "http://mbtamap.herokuapp.com/mapper/rodeo.json", true); // this is possible because of cross-origin resource sharing (CORS) enabled for web application
+
+			// onreadystatechange has to be set to a...
+			// ...function when request is completed, to...
+			// ...handle the response
+			xhr.onreadystatechange = dataReady;
+			xhr.send(null); // Go! Execute!
+		}
+
+		function dataReady() {
+			// The readyState numbers:
+			// 0 = not initialized
+			// 1 = Set up
+			// 2 = Sent
+			// 3 = In progress
+			// 4 = Complete
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				scheduleData = JSON.parse(xhr.responseText);
+				scheduleDom = document.getElementById("schedule");
+				scheduleDom.innerHTML = scheduleData["line"];
+			}
+			else if (xhr.readyState == 4 && xhr.status == 500) {
+				scheduleDom = document.getElementById("schedule");
+				scheduleDom.innerHTML = '<p><img src="http://www.yiyinglu.com/failwhale/images/Homer_the_New_Fail_Whale_by_edwheeler.jpg" alt="fail" /></p>';
+				
+			}
+		}
+	</script>
+</head>
+
+<body onload="init()">
+	<h1>Upcoming Trains</h1>
+	<h2 id="schedule">Loading...</h2>
+</body>
+</html>

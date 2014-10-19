@@ -9,6 +9,7 @@
 			var myLat = 0;
 			var myLng = 0;
 			var map;
+			var marker;
 			var request = new XMLHttpRequest();
 			var currentLoc;
 			
@@ -18,12 +19,16 @@
 	          		zoom: 12
 	        	};
 	        	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	        	request.open("get", "http://developer.mbta.com/lib/rthr/red.json", true);
+	        	if (request.readyState == 4) {
+	        		renderMap();
+	        	}
 	        	getMyLocation();
 	      	}
-			
+
 			function getMyLocation()
 			{
-				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+				if (navigator.geolocation) { 
 					navigator.geolocation.getCurrentPosition(function(position) {
 						currentLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 						map.setCenter(currentLoc);
@@ -37,23 +42,12 @@
 
 			function renderMap()
 			{
-				centerloc = new google.maps.LatLng(myLat, myLng);
-				
-				// Update map and go there...
-				//map.panTo(centerloc);
-	
-				// Create a marker
+				// Create a marker change this
 				// marker = new google.maps.Marker({
 				// 	position: me,
 				// 	title: "Here I Am!"
 				// });
 				// marker.setMap(map);
-					
-				// Open info window on click of marker
-				// google.maps.event.addListener(marker, 'click', function() {
-				// 	infowindow.setContent(marker.title);
-				// 	infowindow.open(map, marker);
-				// });
 				
 				// Calling Google Places API
 				// var request = {
@@ -64,18 +58,6 @@
 				// service = new google.maps.places.PlacesService(map);
 				// service.search(request, callback);
 			}
-			// // var me = new google.maps.LatLng(myLat, myLng);
-
-			// // var marker;
-			// // var infowindow = new google.maps.InfoWindow();
-			// // var places;
-			
-			// // function init()
-			// // {
-			// // 	map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-			// // 	getMyLocation();
-			// // }
-
 
 		</script>
 	</head>
