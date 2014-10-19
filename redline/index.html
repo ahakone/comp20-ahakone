@@ -19,11 +19,14 @@
 	          		zoom: 12
 	        	};
 	        	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	        	request.open("get", "http://developer.mbta.com/lib/rthr/red.json", true);
-	        	if (request.readyState == 4 && request.status == 200) {
-	        		renderMap();
-	        	}
+
 	        	getMyLocation();
+				
+				request.open("get", "http://developer.mbta.com/lib/rthr/red.json", true);
+	        	if (request.readyState == 4 && request.status == 200) {
+	        		window.alert("hello");
+	        		renderMap();
+	        	}	        	
 	      	}
 
 			function getMyLocation()
@@ -42,10 +45,15 @@
 
 			function renderMap()
 			{
+				var lat;
+				var lon;
 				mbtaData = JSON.parse(request.responseText);
-
-				createMarker();
-
+				
+				for (i = 0; i < mbtaData.TripList.Trips.length; i++) {
+					lat = mbtaData.TripList.Trips[i].position.Lat;
+					lon = mbtaData.TripList.Trips[i].position.Long;
+					createMarker(lat, lon);
+				}
 			}
 
 			function createMarker(latitude, longitude)

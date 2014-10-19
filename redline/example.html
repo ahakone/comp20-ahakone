@@ -27,7 +27,7 @@
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				scheduleData = JSON.parse(xhr.responseText);
 				scheduleDom = document.getElementById("schedule");
-				scheduleDom.innerHTML = scheduleData["line"];
+				scheduleDom.innerHTML = scheduleData.schedule[2];
 			}
 			else if (xhr.readyState == 4 && xhr.status == 500) {
 				scheduleDom = document.getElementById("schedule");
