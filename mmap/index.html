@@ -1,50 +1,41 @@
+
 <!DOCTYPE html>
+
 <html>
+
 	<head>
 		<title> Assignment 2 - Marauder's Map </title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-		<meta content="utf-8" http-equiv="encoding">
-		<link rel="stylesheet" href="stylesheet.css"/> 
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
+		<link rel="stylesheet" href="stylesheet.css" />
 		
-		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-		
-		<script type="text/javascript">
+		<script>
 			var myLat = 0;
 			var myLng = 0;
+			var request = new XMLHttpRequest();
+			var me = new google.maps.LatLng(myLat, myLng);
+			var myOptions = {
+						zoom: 13, // The larger the zoom number, the bigger the zoom
+						center: me,
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+					};
 			var map;
 			var marker;
-			var request = new XMLHttpRequest();
-			var currentLoc;
-			var students;
-			var locations;
+			var infowindow = new google.maps.InfoWindow();
+			var places;
 			
-			function initialize() {
-	        	var mapOptions = {
-	          		center: {lat: myLat, lng: myLng},
-	          		zoom: 12
-	        	};
-	        	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-	        	getMyLocation();   	
-	   			
-	   			request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
-	   			console.log(request.readyState);
-				//request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				//locations = request.send("login=Cinderella&lat=" + 0 + "&lng=" + 0);
-
-	   			//console.log(locations);
-	        	// if (request.readyState == 4 && request.status == 200) {
-	        	// 	renderMap();
-	        	// }	 
-	      	}
-
+			function init()
+			{
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				getMyLocation();
+			}
+			
 			function getMyLocation()
 			{
-				if (navigator.geolocation) { 
+				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
 					navigator.geolocation.getCurrentPosition(function(position) {
-						currentLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-						map.setCenter(currentLoc);
+						myLat = position.coords.latitude;
+						myLng = position.coords.longitude;
 						renderMap();
 					});
 				}
@@ -55,30 +46,66 @@
 
 			function renderMap()
 			{
-				var lat;
-				var lon;
-				//students = JSON.parse(request.responseText);
+				me = new google.maps.LatLng(myLat, myLng);
 				
-				// for (i = 0; i < mbtaData.TripList.Trips.length; i++) {
-				// 	lat = mbtaData.TripList.Trips[i].position.Lat;
-				// 	lon = mbtaData.TripList.Trips[i].position.Long;
-				// 	createMarker(lat, lon);
-				// }
-			}
-
-			function createMarker(latitude, longitude)
-			{
-				var markerLoc = new google.maps.LatLng(latitude, longitude);
-				var marker = new google.maps.Marker({
-					map: map,
-					position: markerLoc
+				map.panTo(me);
+	
+				//Create a marker
+				marker = new google.maps.Marker({
+					position: me,
+					title: "Cinderella"
+					//make sure to put a , icon: "cinderella.jpg"
 				});
-			}
+				marker.setMap(map);
+					
+				// Open info window on click of marker
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.setContent(marker.title);
+					infowindow.open(map, marker);
+				});
+				
+				
 
+				// // Calling Google Places API
+				// var request = {
+				// 	location: me,
+				// 	radius: '500',
+				// 	types: ['food']
+				// };
+				// service = new google.maps.places.PlacesService(map);
+				// service.search(request, callback);
+			}
+			
+			// Taken from http://code.google.com/apis/maps/documentation/javascript/places.html
+			// function callback(results, status)
+			// {
+			// 	// if (status == google.maps.places.PlacesServiceStatus.OK) {
+			// 	// 	alert("Got places back!");
+			// 	// 	places = results;
+			// 	// 	for (var i = 0; i < results.length; i++) {
+			// 	// 		createMarker(results[i]);
+			// 	// 	}
+			// 	// }
+			// }
+			
+			// function createMarker(place)
+			// {
+				// var placeLoc = place.geometry.location;
+				// var marker = new google.maps.Marker({
+				// 	map: map,
+				// 	position: place.geometry.location
+				// });
+
+				// google.maps.event.addListener(marker, 'click', function() {
+				// 	infowindow.close();
+				// 	infowindow.setContent(place.name);
+				// 	infowindow.open(map, this);
+				// });
+				//}
 		</script>
 	</head>
-
-	<body onload="initialize()">
-		<div id="map-canvas" style="width:100%; height:100%"></div>
+	
+	<body onload="init()">
+		<div id="map_canvas"></div>
 	</body>
 </html>
