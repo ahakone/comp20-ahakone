@@ -6,6 +6,8 @@
 	<head>
 		<title> Assignment 2 - Marauder's Map </title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
 		<link rel="stylesheet" href="stylesheet.css" />
 		
@@ -27,12 +29,17 @@
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				//callback?
+				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+        		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
+
 				getMyLocation();
 			}
 			
 			function getMyLocation()
 			{
-				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
@@ -54,7 +61,7 @@
 				marker = new google.maps.Marker({
 					position: me,
 					title: "Cinderella"
-					//make sure to put a , icon: "cinderella.jpg"
+					//make sure to put a , then icon: "cinderella.jpg"
 				});
 				marker.setMap(map);
 					
@@ -63,8 +70,6 @@
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
 				});
-				
-				
 
 				// // Calling Google Places API
 				// var request = {
@@ -77,23 +82,24 @@
 			}
 			
 			// Taken from http://code.google.com/apis/maps/documentation/javascript/places.html
-			// function callback(results, status)
-			// {
-			// 	// if (status == google.maps.places.PlacesServiceStatus.OK) {
-			// 	// 	alert("Got places back!");
-			// 	// 	places = results;
-			// 	// 	for (var i = 0; i < results.length; i++) {
-			// 	// 		createMarker(results[i]);
-			// 	// 	}
-			// 	// }
-			// }
+			function callback(results, status)
+			{
+				// if (status == google.maps.places.PlacesServiceStatus.OK) {
+				// 	alert("Got places back!");
+				// 	places = results;
+				// 	for (var i = 0; i < results.length; i++) {
+				// 		createMarker(results[i]);
+				// 	}
+				// }
+			}
 			
-			// function createMarker(place)
-			// {
+			function createMarker(latitude, longitude, name, timestamp)
+			{
 				// var placeLoc = place.geometry.location;
 				// var marker = new google.maps.Marker({
 				// 	map: map,
 				// 	position: place.geometry.location
+
 				// });
 
 				// google.maps.event.addListener(marker, 'click', function() {
@@ -101,7 +107,7 @@
 				// 	infowindow.setContent(place.name);
 				// 	infowindow.open(map, this);
 				// });
-				//}
+			}
 		</script>
 	</head>
 	
