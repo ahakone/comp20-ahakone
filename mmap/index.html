@@ -29,23 +29,6 @@
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 				getMyLocation();
 			}
-			
-			function callback()
-			{
-				if (request.readyState == 4 && request.status == 200) {
-					data = JSON.parse(request.responseText);
-					var distances = [];
-					for (var i = 0; i < data.characters.length; i++) {
-						createCharMarker(data.characters[i]);
-						drawLines(data.characters[i]);
-						distances[i] = calculateDist(data.characters[i]);
-					}
-					displayDists();
-					for (var i = 0; i < data.students.length; i++) {
-						createStudentMarker(data.students[i]);
-					}
-				}
-			}
 
 			function getMyLocation()
 			{
@@ -84,6 +67,29 @@
         		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
 			}			
 			
+			function callback()
+			{
+				if (request.readyState == 4 && request.status == 200) {
+					data = JSON.parse(request.responseText);
+					var distances = [];
+					for (var i = 0; i < data.characters.length; i++) {
+						createCharMarker(data.characters[i]);
+						drawLines(data.characters[i]);
+						distances.push({name: data.characters[i].name, distance: calculateDist(data.characters[i])});
+					}
+
+					// adapted from http://stackoverflow.com/questions/7889006/sorting-arrays-in-javascript-by-object-key-value
+					distances.sort(function(a, b) {
+					    return a.distance - b.distance;
+					});
+
+					displayDists(distances);
+
+					for (var i = 0; i < data.students.length; i++) {
+						createStudentMarker(data.students[i]);
+					}
+				}
+			}
 
 			function createStudentMarker(student)
 			{
@@ -126,6 +132,7 @@
 				});
 			}
 
+			// adapted from https://developers.google.com/maps/documentation/javascript/examples/polyline-simple
 			function drawLines(character)
 			{
 				var charPos = new google.maps.LatLng(character.loc.latitude, character.loc.longitude);
@@ -140,14 +147,53 @@
   				toCharacter.setMap(map);
 			}
 
-			function calculateDist(character)
+			function toRad(num)
 			{
-
+				return num * Math.PI / 180;
 			}
 
-			function displayDists()
+			// adapted from http://stackoverflow.com/questions/14560999/using-the-haversine-formula-in-javascript
+			function calculateDist(character)
 			{
+				var R = 6371; // km 
+				var M = 0.62137; // mi
 
+	            var lat2 = character.loc.latitude; 
+	            var lon2 = character.loc.longitude; 
+	            var lat1 = me.lat(); 
+	            var lon1 = me.lng();
+
+				var dLat = toRad(lat2 - lat1);
+				var dLon = toRad(lon2 - lon1);
+
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+				        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+				        Math.sin(dLon/2) * Math.sin(dLon/2);  
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+				var d = R * c * M; 
+
+				return d;
+			}
+
+			function displayDists(dists)
+			{
+				var infobox = "<p> Distances from Cinderella (me) in miles: </p> ";
+				var marker = new google.maps.Marker({
+					map: map,
+					position: me,
+					title: "Cinderella (me)".name,
+					icon: "cinderella.png"
+				});
+				
+				for (var i = 0; i < dists.length; i++) {
+					infobox += dists[i].name + " = " + dists[i].distance + "</br>";
+				}
+				
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.close();
+					infowindow.setContent(infobox);
+					infowindow.open(map, this);
+				});
 			}
 
 		</script>

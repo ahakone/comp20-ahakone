@@ -11,3 +11,8 @@ body {
 #map_canvas {
 	height: 100%;
 }
+
+p {
+	font-weight: bold;
+	margin: 0px;
+}
