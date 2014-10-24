@@ -17,26 +17,42 @@
 			var request = new XMLHttpRequest();
 			var me = new google.maps.LatLng(myLat, myLng);
 			var myOptions = {
-						zoom: 13, // The larger the zoom number, the bigger the zoom
-						center: me,
-						mapTypeId: google.maps.MapTypeId.ROADMAP
-					};
+				zoom: 13, // The larger the zoom number, the bigger the zoom
+				center: me,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
 			var map;
 			var marker;
 			var infowindow = new google.maps.InfoWindow();
+			var data;
 			var places;
 			
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				//callback?
+
 				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
         		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        		request.onreadystatechange = callback;
         		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
 
 				getMyLocation();
 			}
 			
+			function callback()
+			{
+				if (request.readyState == 4 && request.status == 200) {
+					data = JSON.parse(request.responseText);
+								// 	places = results;
+					for (var i = 0; i < data.characters.length; i++) {
+						createCharMarker(data.characters[i]);
+					}
+					for (var i = 0; i < data.students.length; i++) {
+						createStudentMarker(data.students[i]);
+					}
+				}
+			}
+
 			function getMyLocation()
 			{
 				if (navigator.geolocation) {
@@ -53,11 +69,9 @@
 
 			function renderMap()
 			{
-				me = new google.maps.LatLng(myLat, myLng);
-				
+				me = new google.maps.LatLng(myLat, myLng);				
 				map.panTo(me);
 	
-				//Create a marker
 				marker = new google.maps.Marker({
 					position: me,
 					title: "Cinderella",
@@ -79,21 +93,10 @@
 				// };
 				// service = new google.maps.places.PlacesService(map);
 				// service.search(request, callback);
-			}
+			}			
 			
-			// Taken from http://code.google.com/apis/maps/documentation/javascript/places.html
-			function callback(results, status)
-			{
-				// if (status == google.maps.places.PlacesServiceStatus.OK) {
-				// 	alert("Got places back!");
-				// 	places = results;
-				// 	for (var i = 0; i < results.length; i++) {
-				// 		createMarker(results[i]);
-				// 	}
-				// }
-			}
-			
-			function createMarker(latitude, longitude, name, timestamp)
+
+			function createStudentMarker(person)
 			{
 				// var placeLoc = place.geometry.location;
 				// var marker = new google.maps.Marker({
@@ -107,6 +110,11 @@
 				// 	infowindow.setContent(place.name);
 				// 	infowindow.open(map, this);
 				// });
+			}
+
+			function createCharMarker(person)
+			{
+
 			}
 		</script>
 	</head>
