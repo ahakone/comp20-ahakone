@@ -17,16 +17,14 @@
 			var request = new XMLHttpRequest();
 			var me = new google.maps.LatLng(myLat, myLng);
 			var myOptions = {
-				zoom: 13, // The larger the zoom number, the bigger the zoom
+				zoom: 13,
 				center: me,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			var map;
-			var marker;
 			var infowindow = new google.maps.InfoWindow();
 			var data;
-			var places;
-			
+						
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -43,10 +41,13 @@
 			{
 				if (request.readyState == 4 && request.status == 200) {
 					data = JSON.parse(request.responseText);
-								// 	places = results;
+					var distances = [];
 					for (var i = 0; i < data.characters.length; i++) {
 						createCharMarker(data.characters[i]);
+						drawLines(data.characters[i]);
+						distances[i] = calculateDist(data.characters[i]);
 					}
+					displayDists();
 					for (var i = 0; i < data.students.length; i++) {
 						createStudentMarker(data.students[i]);
 					}
@@ -72,27 +73,17 @@
 				me = new google.maps.LatLng(myLat, myLng);				
 				map.panTo(me);
 	
-				marker = new google.maps.Marker({
+				var marker = new google.maps.Marker({
 					position: me,
-					title: "Cinderella",
+					title: "Cinderella (me)",
 					icon: "cinderella.png"
 				});
 				marker.setMap(map);
 					
-				// Open info window on click of marker
 				google.maps.event.addListener(marker, 'click', function() {
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
 				});
-
-				// // Calling Google Places API
-				// var request = {
-				// 	location: me,
-				// 	radius: '500',
-				// 	types: ['food']
-				// };
-				// service = new google.maps.places.PlacesService(map);
-				// service.search(request, callback);
 			}			
 			
 
@@ -136,7 +127,22 @@
 					infowindow.open(map, this);
 				});
 			}
-			
+
+			function drawLines(character)
+			{
+
+			}
+
+			function calculateDist(character)
+			{
+
+			}
+
+			function displayDists()
+			{
+
+			}
+
 		</script>
 	</head>
 	
