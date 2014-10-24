@@ -96,26 +96,47 @@
 			}			
 			
 
-			function createStudentMarker(person)
+			function createStudentMarker(student)
 			{
-				// var placeLoc = place.geometry.location;
-				// var marker = new google.maps.Marker({
-				// 	map: map,
-				// 	position: place.geometry.location
+				var pos = new google.maps.LatLng(student.lat, student.lng);	
+				var marker = new google.maps.Marker({
+					map: map,
+					position: pos,
+					title: student.login
+				});
 
-				// });
-
-				// google.maps.event.addListener(marker, 'click', function() {
-				// 	infowindow.close();
-				// 	infowindow.setContent(place.name);
-				// 	infowindow.open(map, this);
-				// });
+				var infobox = "Login: " + student.login + "</br>" + 
+								"Latitude: " + student.lat + "</br>" + 
+								"Longitude: " + student.lng + "</br>" + 
+								"Timestamp: " + student.created_at;
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.close();
+					infowindow.setContent(infobox);
+					infowindow.open(map, this);
+				});
 			}
 
-			function createCharMarker(person)
+			function createCharMarker(character)
 			{
+				var pos = new google.maps.LatLng(character.loc.latitude, character.loc.longitude);	
+				var marker = new google.maps.Marker({
+					map: map,
+					position: pos,
+					title: character.name,
+					icon: character.name + ".png"
+				});
 
+				var infobox = "Name: " + character.name + "</br>" + 
+								"Latitude: " + character.loc.latitude + "</br>" + 
+								"Longitude: " + character.loc.longitude + "</br>" + 
+								"Note: " + character.loc.note;
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.close();
+					infowindow.setContent(infobox);
+					infowindow.open(map, this);
+				});
 			}
+			
 		</script>
 	</head>
 	
