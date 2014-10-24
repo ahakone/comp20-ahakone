@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -28,12 +27,6 @@
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
-        		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        		request.onreadystatechange = callback;
-        		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
-
 				getMyLocation();
 			}
 			
@@ -72,7 +65,7 @@
 			{
 				me = new google.maps.LatLng(myLat, myLng);				
 				map.panTo(me);
-	
+
 				var marker = new google.maps.Marker({
 					position: me,
 					title: "Cinderella (me)",
@@ -84,6 +77,11 @@
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
 				});
+
+				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+        		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        		request.onreadystatechange = callback;
+        		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
 			}			
 			
 
@@ -130,7 +128,16 @@
 
 			function drawLines(character)
 			{
-
+				var charPos = new google.maps.LatLng(character.loc.latitude, character.loc.longitude);
+				var line = [charPos, me];
+				var toCharacter = new google.maps.Polyline({
+    				path: line,
+    				geodesic: true,
+    				strokeColor: '#FF0000',
+    				strokeOpacity: 1.0,
+    				strokeWeight: 2
+  				});
+  				toCharacter.setMap(map);
 			}
 
 			function calculateDist(character)
