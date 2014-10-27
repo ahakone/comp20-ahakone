@@ -12,17 +12,18 @@
 	  	$(document).ready(function(){
 	  		// init stuff
 		});
-
+		
 		function reload()
 		{
-			elem = document.getElementById("news");
+			elem = $("div#news");
 			output = "";
+
 			for (key in localStorage) {
-				output = "<p>" + localStorage[key] + "</p>\n" + output;
+				output = "<p>" + key + " - " + localStorage[key] + "</p>\n" + output;
 			}
-			elem.innerHTML = output;
+			elem.html(output);
 		}
-		
+
 		function store()
 		{
 			txt = $("#msg").val();
