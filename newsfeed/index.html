@@ -8,10 +8,6 @@
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script>
-
-	  	$(document).ready(function(){
-	  		// init stuff
-		});
 		
 		function reload()
 		{
@@ -19,7 +15,8 @@
 			output = "";
 
 			for (key in localStorage) {
-				output = "<p>" + key + " - " + localStorage[key] + "</p>\n" + output;
+				var date = new Date(parseInt(key));
+				output = "<p>" + date + " - " + localStorage[key] + "</p>\n" + output;
 			}
 			elem.html(output);
 		}
