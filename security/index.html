@@ -12,17 +12,31 @@
 		
 		<h1>Introduction</h1>
 		<h1>Methodology</h1>
+			<p>
+				The testing was initially done as <b>“black-box”<b> test in which I did not look at the source code but used my version of assignment 2 Marauder’s Map to access his Heroku website. I then did a <b>“white-box”<b> testing in which I attacked the website after looking at his code. 
+			</p>
 		<h1>Abstract</h1>
 		<h1>Issues found</h1>
 		<ol>
 			<li><h3>JavaScript injection</h3>
 				<ul> 
-					<li><b>Location:</b> API POST (/sendLocation)<br><br></li>
-					<li><b>Severity:</b> High – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br></li>
-					<li><b>Description:</b> The client can input HTML or JavaScript code (using string concatenation) instead of their login name. The code will run and may cause the page to do unexpected actions like showing inappropriate images, annoying pop-ups, redirecting the page to another malicious website, etc. <br><br></li>
-					<li><b>Proof of vulnerability:</b> Doing <br> <code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&lat="+ me.lat() + "&lng=" + me.lng());</code><br> will give you<br><img src=jsinjection_proof.png alt=JS injection proof></li>						
-					<li><b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code></li>						
-
+					<li>
+						<b>Location:</b> API POST (/sendLocation)<br><br>
+					</li>
+					<li>
+						<b>Severity:</b> High – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
+					</li>
+					<li>
+						<b>Description:</b> The client can input HTML or JavaScript code (using string concatenation) instead of their login name. The code will run and may cause the page to do unexpected actions like showing inappropriate images, annoying pop-ups, redirecting the page to another malicious website, etc. <br><br>
+					</li>
+					<li>
+						<b>Proof of vulnerability:</b> Doing <br> 
+						<code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&amp;lat="+ me.lat() + "&amp;lng=" + me.lng());</code><br> 
+						will give you<br><img src="jsinjection_proof.png" alt="JS injection proof"/>
+					</li>						
+					<li>
+						<b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code>
+					</li>						
 				</ul>
 			</li>
 
@@ -31,7 +45,7 @@
 					<li><b>Location:</b> API POST (/sendLocation)<br><br></li>
 					<li><b>Severity:</b> Low – This would affect the accuracy of the website but will not inject malicious content to the server or the client machine. h – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br></li>
 					<li><b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br></li>
-					<li><b>Proof of vulnerability:</b> Even though your location is lat=40 and lng=-70, if you do <br> <code>request.send("login=Cinderella&lat=" + 0 + "&lng=" + 0); </code> <br> then you will get <br> <img src=wrong_location_proof.png alt=Wrong geolocation proof><br></li>						
+					<li><b>Proof of vulnerability:</b> Even though your location is lat=40 and lng=-70, if you do <br> <code>request.send("login=Cinderella&amp;lat=" + 0 + "&amp;lng=" + 0); </code> <br> then you will get <br> <img src="wrong_location_proof.png" alt="Wrong geolocation proof"/><br></li>						
 					<li><b>Resolution:</b> One possible solution is to check if the input latitude and longitude is within a certain range of the client’s IP location.  </li>						
 
 				</ul>
