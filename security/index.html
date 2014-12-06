@@ -12,7 +12,7 @@
 		
 		<h1>Introduction</h1>
 			<p>
-				This report accesses the possible client-side and server-side security risks and vulnerabilities of J. McCants’ “Marauder’s Map API” used in assignment 2 and 3. The API consists of 4 parts: <br>
+				This report accesses the possible client-side and server-side security risks and vulnerabilities of <u>J. McCants’</u> “Marauder’s Map API” used in assignment 2 and 3. The API consists of 4 parts: <br>
 			</p>
 			<ul>
 				<li>
@@ -106,6 +106,29 @@
 						</li>						
 					</ul>
 				</li>
+
+				<li><h3> </h3>
+					<ul> 
+						<li>
+							<b>Location:</b> API POST (/sendLocation)<br><br>
+						</li>
+						<li>
+							<b>Severity:</b> Low – This would affect the accuracy of the website but will not inject malicious content to the server or the client machine. h – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
+						</li>
+						<li>
+							<b>Description:</b> Querying in /locations.json for a valid login name will result in showing all fields related to the login name. This may include fields other than login name, latitude, longitude, date created, and document, such as passwords stored for account and personal information.<br><br>
+						</li>						
+						<li>
+							<b>Resolution:</b> One possible solution is to check if the input latitude and longitude is within a certain range of the client’s IP location.
+						</li>						
+
+					</ul>
+				</li>
 			</ol>
+
+		<h1><br>Conclusion</h1>
+			<p>
+				Although the aforementioned securities risks and vulnerabilities exist in the Marauder’s Map API, the resolution recommendations are relatively easy to fix and requires very few lines of code. The incorrect geolocation latitude and longitude issue might be a bit harder to solve, only because it requires cross-referencing the client’s IP location to the input latitude and longitude. However, it is important to address these issues since, at worst, both the client and server can be subject to malware and other malicious content from attackers. 
+			</p>
 	</body>
 </html>
