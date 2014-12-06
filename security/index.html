@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title> Marauder's Map Security Report </title>
+
+	</head>
+	<body>
+		<h1>Marauder's Map Security Report</h1>
+		<p> by Anzu Hakone</p>
+		
+		<h1>Introduction</h1>
+		<h1>Methodology</h1>
+		<h1>Abstract</h1>
+		<h1>Issues found</h1>
+		<ol>
+			<li><h3>JavaScript injection</h3>
+				<ul> 
+					<li><b>Location:</b> API POST (/sendLocation)<br><br></li>
+					<li><b>Severity:</b> High – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br></li>
+					<li><b>Description:</b> The client can input HTML or JavaScript code (using string concatenation) instead of their login name. The code will run and may cause the page to do unexpected actions like showing inappropriate images, annoying pop-ups, redirecting the page to another malicious website, etc. <br><br></li>
+					<li><b>Proof of vulnerability:</b> Doing <br> <code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&lat="+ me.lat() + "&lng=" + me.lng());</code><br> will give you<br><img src=jsinjection_proof.png alt=JS injection proof></li>						
+					<li><b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code></li>						
+
+				</ul>
+			</li>
+
+
+		</ol>
+	</body>
+</html>

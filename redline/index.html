@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title> MBTA Redline </title>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
 		<link rel="stylesheet" href="stylesheet.css"/> 
 		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		
@@ -12,6 +14,7 @@
 			var marker;
 			var request = new XMLHttpRequest();
 			var currentLoc;
+			var mbtaData;
 			
 			function initialize() {
 	        	var mapOptions = {
@@ -22,7 +25,7 @@
 
 	        	getMyLocation();
 				
-				request.open("get", "http://developer.mbta.com/lib/rthr/red.json", true);
+				request.open("get", "https://radiant-savannah-1624.herokuapp.com/redline.json", true);
 	        	if (request.readyState == 4 && request.status == 200) {
 	        		window.alert("hello");
 	        		renderMap();
@@ -47,11 +50,12 @@
 			{
 				var lat;
 				var lon;
-				mbtaData = JSON.parse(request.responseText);
+				console.log(request.responseText);
+				// mbtaData = JSON.parse(request.responseText);
 				
 				for (i = 0; i < mbtaData.TripList.Trips.length; i++) {
-					lat = mbtaData.TripList.Trips[i].position.Lat;
-					lon = mbtaData.TripList.Trips[i].position.Long;
+					lat = mbtaData.TripList.Trips[i].Position.Lat;
+					lon = mbtaData.TripList.Trips[i].Position.Long;
 					createMarker(lat, lon);
 				}
 			}

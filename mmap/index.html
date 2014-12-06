@@ -9,7 +9,7 @@
 		<meta content="utf-8" http-equiv="encoding">
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
 		<link rel="stylesheet" href="stylesheet.css" />
-		
+
 		<script>
 			var myLat = 0;
 			var myLng = 0;
@@ -33,6 +33,7 @@
 			function getMyLocation()
 			{
 				if (navigator.geolocation) {
+					
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
@@ -61,16 +62,25 @@
 					infowindow.open(map, marker);
 				});
 
-				request.open("POST", "http://chickenofthesea.herokuapp.com/sendLocation", true);
+				// request.open("GET", "http://localhost:3000/locations.json", true);
+				// request.open("POST", "http://localhost:3000/sendLocation", true);
+				request.open("POST", "https://radiant-savannah-1624.herokuapp.com/sendLocation", true);
+				// request.open("POST", "https://gentle-spire-1591.herokuapp.com/sendLocation", true);
         		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         		request.onreadystatechange = callback;
-        		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
+        		// request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
+        		request.send("login=<script> <\/script> &lat=" + 0  + "&lng=" + 0);
+        		// request.send("login=<img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/>&lat="+ me.lat() + "&lng=" + me.lng());
+
+        		// request.send("login=<script>db.collection.remove({'name':'Cinderella'})<\/script>" + "&lat=" + me.lat() + "&lng=" + me.lng());
+
 			}			
 			
 			function callback()
 			{
 				if (request.readyState == 4 && request.status == 200) {
 					data = JSON.parse(request.responseText);
+					console.log(data);
 					var distances = [];
 					for (var i = 0; i < data.characters.length; i++) {
 						createCharMarker(data.characters[i]);
