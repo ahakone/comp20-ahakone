@@ -33,7 +33,7 @@
 						<b>Proof of vulnerability:</b> Doing <br> 
 						<code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&amp;lat="+ me.lat() + "&amp;lng=" + me.lng());</code><br> 
 						will give you<br>
-						<img src="jsinjection_proof.png" alt="JS injection proof"/>
+						<img src="jsinjection_proof.png" alt="JS injection proof" border="1"/>
 					</li>						
 					<li>
 						<b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code>
@@ -54,7 +54,7 @@
 					</li>
 					<li>
 						<b>Proof of vulnerability:</b> Even though your location is lat=40 and lng=-70, if you do <br> <code>request.send("login=Cinderella&amp;lat=" + 0 + "&amp;lng=" + 0); </code> <br> then you will get <br> 
-						<img src="wrong_location_proof.png" alt="Wrong geolocation proof"/><br>
+						<img src="wrong_location_proof.png" alt="Wrong geolocation proof" border="1"/><br>
 					</li>						
 					<li>
 						<b>Resolution:</b> One possible solution is to check if the input latitude and longitude is within a certain range of the client’s IP location.
