@@ -11,75 +11,101 @@
 		<p> by Anzu Hakone</p>
 		
 		<h1>Introduction</h1>
-		<h1>Methodology</h1>
+			<p>
+				This report accesses the possible client-side and server-side security risks and vulnerabilities of J. McCants’ “Marauder’s Map API” used in assignment 2 and 3. The API consists of 4 parts: <br>
+			</p>
+			<ul>
+				<li>
+					<b>POST API (/sendLocation)</b> - for the client to send their login name and geolocation (latitude, longitude). The Heroku database will store the input information as well as the date which the information was input into the database. <br><br>
+				</li>
+
+				<li>
+					<b>GET API (/locations.json) </b> – clients can query a specific login name<br><br>
+				</li>
+
+				<li>
+					<b>GET API (/)</b> – displays all checkins <br><br>
+				</li>
+
+				<li>
+					<b>GET API (/redline.json)</b>– returns a live copy of MBTA location information from the MBTA.com website
+				</li>
+			</ul>
+
+		<h1><br>Methodology</h1>
 			<p>
 				The testing was initially done as <b>“black-box”</b> test in which I did not look at the source code but used my version of assignment 2 Marauder’s Map to access his Heroku website. I then did a <b>“white-box”</b> testing in which I attacked the website after looking at his code. No security tools were used. 
 			</p>
-		<h1>Abstract</h1>
-		<h1>Issues found</h1>
-		<ol>
-			<li><h3>JavaScript injection</h3>
-				<ul> 
-					<li>
-						<b>Location:</b> API POST (/sendLocation)<br><br>
-					</li>
-					<li>
-						<b>Severity:</b> High – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
-					</li>
-					<li>
-						<b>Description:</b> The client can input HTML or JavaScript code (using string concatenation) instead of their login name. The code will run and may cause the page to do unexpected actions like showing inappropriate images, annoying pop-ups, redirecting the page to another malicious website, etc. <br><br>
-					</li>
-					<li>
-						<b>Proof of vulnerability:</b> Doing <br> 
-						<code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&amp;lat="+ me.lat() + "&amp;lng=" + me.lng());</code><br> 
-						will give you<br>
-						<img src="jsinjection_proof.png" alt="JS injection proof" border="1"/>
-					</li>						
-					<li>
-						<b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code>
-					</li>						
-				</ul>
-			</li>
 
-			<li><h3>Incorrect geolocation latitude and longitude</h3>
-				<ul> 
-					<li>
-						<b>Location:</b> API POST (/sendLocation)<br><br>
-					</li>
-					<li>
-						<b>Severity:</b> Low – This would affect the accuracy of the website but will not inject malicious content to the server or the client machine. h – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
-					</li>
-					<li>
-						<b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br>
-					</li>
-					<li>
-						<b>Proof of vulnerability:</b> Even though your location is lat=40 and lng=-70, if you do <br> <code>request.send("login=Cinderella&amp;lat=" + 0 + "&amp;lng=" + 0); </code> <br> then you will get <br> 
-						<img src="wrong_location_proof.png" alt="Wrong geolocation proof" border="1"/><br>
-					</li>						
-					<li>
-						<b>Resolution:</b> One possible solution is to check if the input latitude and longitude is within a certain range of the client’s IP location.
-					</li>						
-				</ul>
-			</li>
+		<h1><br>Abstract</h1>
+			<p>
+				All found vulnerabilities resulted from trusting the input of the clients. With the current version, attackers can input programs into the database which can then make the website behave according to the attacker’s program. Such programs can include one that automatically redirects the website to another malicious website. A less severe vulnerability is that the location of the user can be falsified by inputting incorrect latitude and longitudes. This will result in showing users at locations of the map that are different from where they actually are. Another security risk of high concern is that when you search a specific login name, all of the information for that login name can be shown. If the database contains passwords, addresses, and other personal information of a user, any outsider can view that information. 
+			</p>
 
-			<li><h3>Successful querying results in showing all fields</h3>
-				<ul> 
-					<li>
-						<b>Location:</b> API GET (/locations.json)<br><br>
-					</li>
-					<li>
-						<b>Severity:</b> High – if personal information such as passwords and addresses are stored in the database, these can be visible when querying with a valid login name.<br><br>
-					</li>
-					<li>
-						<b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br></li>
-					<li>
-						<b>Proof of vulnerability:</b> API POST (/sendLocation)<br><br>
-					</li>						
-					<li>
-						<b>Resolution:</b> Instead of showing all of the key-value pair fields related to the given login name, we can specify which fields to show (i.e., show only login name, latitude, longitude, and time created).
-					</li>						
-				</ul>
-			</li>
-		</ol>
+		<h1><br>Issues found</h1>
+			<ol>
+				<li><h3>JavaScript injection</h3>
+					<ul> 
+						<li>
+							<b>Location:</b> API POST (/sendLocation)<br><br>
+						</li>
+						<li>
+							<b>Severity:</b> High – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
+						</li>
+						<li>
+							<b>Description:</b> The client can input HTML or JavaScript code (using string concatenation) instead of their login name. The code will run and may cause the page to do unexpected actions like showing inappropriate images, annoying pop-ups, redirecting the page to another malicious website, etc. <br><br>
+						</li>
+						<li>
+							<b>Proof of vulnerability:</b> Doing <br> 
+							<code>request.send("login=&lt;img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/&gt;&amp;lat="+ me.lat() + "&amp;lng=" + me.lng());</code><br> 
+							will give you<br>
+							<img src="jsinjection_proof.png" alt="JS injection proof"/>
+						</li>						
+						<li>
+							<b>Resolution:</b> The login input can be checked so that input with common programming notations or data files cannot be input into the database. Ex. <code>"&lt;script&gt;", “.jpg” “.exe” </code>
+						</li>						
+					</ul>
+				</li>
+
+				<li><h3>Incorrect geolocation latitude and longitude</h3>
+					<ul> 
+						<li>
+							<b>Location:</b> API POST (/sendLocation)<br><br>
+						</li>
+						<li>
+							<b>Severity:</b> Low – This would affect the accuracy of the website but will not inject malicious content to the server or the client machine. h – malicious code can execute and affect both client- and server-sides. Virus can be input into the database.<br><br>
+						</li>
+						<li>
+							<b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br>
+						</li>
+						<li>
+							<b>Proof of vulnerability:</b> Even though your location is lat=40 and lng=-70, if you do <br> <code>request.send("login=Cinderella&amp;lat=" + 0 + "&amp;lng=" + 0); </code> <br> then you will get <br> 
+							<img src="wrong_location_proof.png" alt="Wrong geolocation proof"/><br>
+						</li>						
+						<li>
+							<b>Resolution:</b> One possible solution is to check if the input latitude and longitude is within a certain range of the client’s IP location.
+						</li>						
+					</ul>
+				</li>
+
+				<li><h3>Successful querying results in showing all fields</h3>
+					<ul> 
+						<li>
+							<b>Location:</b> API GET (/locations.json)<br><br>
+						</li>
+						<li>
+							<b>Severity:</b> High – if personal information such as passwords and addresses are stored in the database, these can be visible when querying with a valid login name.<br><br>
+						</li>
+						<li>
+							<b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br></li>
+						<li>
+							<b>Proof of vulnerability:</b> API POST (/sendLocation)<br><br>
+						</li>						
+						<li>
+							<b>Resolution:</b> Instead of showing all of the key-value pair fields related to the given login name, we can specify which fields to show (i.e., show only login name, latitude, longitude, and time created).
+						</li>						
+					</ul>
+				</li>
+			</ol>
 	</body>
 </html>

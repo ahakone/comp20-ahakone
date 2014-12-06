@@ -63,13 +63,14 @@
 				});
 
 				// request.open("GET", "http://localhost:3000/locations.json", true);
-				// request.open("POST", "http://localhost:3000/sendLocation", true);
-				request.open("POST", "https://radiant-savannah-1624.herokuapp.com/sendLocation", true);
+				request.open("POST", "http://localhost:3000/sendLocation", true);
+				// request.open("POST", "https://radiant-savannah-1624.herokuapp.com/sendLocation", true);
 				// request.open("POST", "https://gentle-spire-1591.herokuapp.com/sendLocation", true);
         		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         		request.onreadystatechange = callback;
         		// request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng());
-        		request.send("login=<script> <\/script> &lat=" + 0  + "&lng=" + 0);
+        		request.send("login=Cinderella&lat=" + me.lat() + "&lng=" + me.lng() + "&password=hacked");
+        		// request.send("login=<script> <\/script> &lat=" + 0  + "&lng=" + 0);
         		// request.send("login=<img src=http://wisdomforawiredworld.com/wp-content/uploads/2013/03/Youve-been-hacked.png alt='hacked'\/>&lat="+ me.lat() + "&lng=" + me.lng());
 
         		// request.send("login=<script>db.collection.remove({'name':'Cinderella'})<\/script>" + "&lat=" + me.lat() + "&lng=" + me.lng());
