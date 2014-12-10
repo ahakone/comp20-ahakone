@@ -99,7 +99,9 @@
 						<li>
 							<b>Description:</b> Since there is no checking involved in the client’s input of the latitude and longitude, the client can input a latitude and longitude that does not correspond to their actual location.  <br><br></li>
 						<li>
-							<b>Proof of vulnerability:</b> API POST (/sendLocation)<br><br>
+							<b>Proof of vulnerability:</b> Even though the field "password" is not shown when accessing /index, the query of <code> ?login=Cinderella</code> will result in: <br>
+							<img src="query_proof.png" alt="Wrong geolocation proof"/><br>
+							*** The first line shows the "password" as well as all of the other fields ***<br><br>
 						</li>						
 						<li>
 							<b>Resolution:</b> Instead of showing all of the key-value pair fields related to the given login name, we can specify which fields to show (i.e., show only login name, latitude, longitude, and time created).
@@ -107,7 +109,7 @@
 					</ul>
 				</li>
 
-				<li><h3> </h3>
+				<!-- <li><h3> </h3>
 					<ul> 
 						<li>
 							<b>Location:</b> API POST (/sendLocation)<br><br>
@@ -123,7 +125,7 @@
 						</li>						
 
 					</ul>
-				</li>
+				</li> -->
 			</ol>
 
 		<h1><br>Conclusion</h1>

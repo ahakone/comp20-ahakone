@@ -1,5 +1,6 @@
 Implemented correctly: all aspects
-Implemented incorrectly: not "incorrect," but lacks style
+Implemented incorrectly: The third vulnerability (I didn't have time)
+Note: not "incorrect," but lacks style
 
 Collaboration: N/A
 
