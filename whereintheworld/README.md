@@ -12,16 +12,16 @@
 		<li>
 			POST /sendLocation API <br>
 			<img src="readme-imgs/ref1.png" alt="Post image"> <br>
-			Submits the user's check-in information. The mandatory fields for submission to this API are login, lat, and lng. Successful submission of these three pieces of data results in one entry into the MongoDB collection and a return JSON string with the other users' last 100 check-ins. Cross-origin resource sharing is enabled.
+			Submits the user's check-in information. The mandatory fields for submission to this API are login, lat, and lng. Successful submission of these three pieces of data results in one entry into the MongoDB collection and a return JSON string with the other users' last 100 check-ins. Cross-origin resource sharing is enabled. <br>
 		</li>
 		<li>
 			GET /locations.json API <br>
-			Returns a JSON string for a specified login with the check-ins sorted in descending order by timestamp. The mandatory parameter is a login name. Cross-origin resource sharing is enabled.
+			Returns a JSON string for a specified login with the check-ins sorted in descending order by timestamp. The mandatory parameter is a login name. Cross-origin resource sharing is enabled. <br>
 		</li>
 		<li>
 			/ - Home, the root, the index in HTML <br>
 			<img src="readme-imgs/ref2.png" alt="index.html image"> <br>
-			Accessing this on a web browser displays a list of all the check-ins (login name, timestamps, latitude, longitude) for all logins sorted in descending order by timestamp.
+			Accessing this on a web browser displays a list of all the check-ins (login name, timestamps, latitude, longitude) for all logins sorted in descending order by timestamp. <br>
 		</li>
 		<li>
 			GET /redline.json API <br>
