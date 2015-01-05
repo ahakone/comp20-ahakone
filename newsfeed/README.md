@@ -1,4 +1,5 @@
 <h1>  News Feed </h1>
+<a href="http://ahakone.github.io/newsfeed"> Link </a>
 <p> Using local storage &amp; jQuery </p>
 <!-- <img src="ref.png" alt=""> -->
 
