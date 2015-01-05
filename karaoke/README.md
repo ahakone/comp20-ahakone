@@ -5,5 +5,5 @@
 <hr>
 <p>
 	By stanza annotation (event/time dependent) of Monkees' "Daydream Believer" music video using JavaScript.
-	<img src="ref1.png" alt="Karaoke screenshot">
+	<img src="ref1.png" alt="Karaoke screenshot" style="margin-left margin-right: auto">
 </p>
