@@ -7,23 +7,23 @@
 	<ul> 
 		<li> 
 			Greater than 1280 pixels 
-			<img src="readme-imgs/ref1.png" alt="> 1280 px" style="border:5px solid black;">
+			<img src="readme-imgs/ref1.png" alt="> 1280 px">
 		</li>
 		<li>
 			Greater than 1024 pixels but less than or equal to 1280 pixels
-			<img src="readme-imgs/ref2.png" alt="> 1024 px and <= 1280px" style="border:5px solid black;">
+			<img src="readme-imgs/ref2.png" alt="> 1024 px and <= 1280px">
 		</li>
 		<li>
 			Greater than 768 pixels but less than or equal to 1024 pixels
-			<img src="readme-imgs/ref3.png" alt=">768 px and <= 1024 px" style="border:5px solid black;">
+			<img src="readme-imgs/ref3.png" alt=">768 px and <= 1024 px">
 		</li>
 		<li>
 			Greater than 480 pixels but less than or equal to 768 pixels
-			<img src="readme-imgs/ref4.png" alt="> 480 px and <= 768 px" style="border:5px solid black;">
+			<img src="readme-imgs/ref4.png" alt="> 480 px and <= 768 px">
 		</li>
 		<li>
 			Less than or equal to 480 pixels
-			<img src="readme-imgs/ref5.png" alt="<= 480 px" style="border:5px solid black;">
+			<img src="readme-imgs/ref5.png" alt="<= 480 px">
 		</li>
 	</ul>
 </p>
