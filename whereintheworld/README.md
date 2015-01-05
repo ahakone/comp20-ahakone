@@ -10,6 +10,7 @@
 	There are 4 APIs to this application:
 	<ol>
 		<li>
+			<img src="readme-imgs/ref1.png" alt="Post image">
 			POST /sendLocation API <br>
 			Submits the user's check-in information. The mandatory fields for submission to this API are login, lat, and lng. Successful submission of these three pieces of data results in one entry into the MongoDB collection and a return JSON string with the other users' last 100 check-ins. Cross-origin resource sharing is enabled.
 		</li>
@@ -18,6 +19,7 @@
 			Returns a JSON string for a specified login with the check-ins sorted in descending order by timestamp. The mandatory parameter is a login name. Cross-origin resource sharing is enabled.
 		</li>
 		<li>
+			<img src="readme-imgs/ref2.png" alt="index.html image">
 			/ - Home, the root, the index in HTML <br>
 			Accessing this on a web browser displays a list of all the check-ins (login name, timestamps, latitude, longitude) for all logins sorted in descending order by timestamp.
 		</li>
