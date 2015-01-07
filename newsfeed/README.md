@@ -1,5 +1,5 @@
 <h1>  News Feed </h1>
-<a href="http://ahakone.github.io/newsfeed"> Link </a>
+<a href="http://ahakone.github.io/comp20-ahakone/newsfeed/"> Link </a>
 <p> Using local storage &amp; jQuery </p>
 
 <h4> Description </h4>

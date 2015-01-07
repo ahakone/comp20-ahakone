@@ -28,7 +28,7 @@
 			Returns a live copy of the JSON string from <a href="http://developer.mbta.com/lib/rthr/red.json"> MBTA redline locations </a>. Cross-origin resource sharing is enabled. See the <a href="https://github.com/ahakone/comp20-ahakone/tree/master/redline"> Redline </a> project for an example of how to use this API.
 		</li>
 	</ol>
-	* The security risks of this API is summarized <a href="http://ahakone.github.io/security/"> here </a>.
+	* The security risks of this API is summarized <a href="http://ahakone.github.io/comp20-ahakone/security/"> here </a>.
 </p>
  
 <h4> Collab </h4>

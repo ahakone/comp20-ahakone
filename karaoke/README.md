@@ -1,5 +1,5 @@
 <h1>Karaoke</h1>
-<a href="http://ahakone.github.io/karaoke/"> Link </a>
+<a href="http://ahakone.github.io/comp20-ahakone/karaoke/"> Link </a>
 <p> Using JavaScript media events</p>
 
 <h4> Description </h4>

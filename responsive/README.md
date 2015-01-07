@@ -1,5 +1,5 @@
 <h1> Homer Simpson Responsive Image</h1>
-<a href="https://ahakone.github.io/responsive"> Link </a>
+<a href="http://ahakone.github.io/comp20-ahakone/responsive/"> Link </a>
 
 <h4> Description </h4>
 <p>

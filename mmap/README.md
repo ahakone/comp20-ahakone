@@ -1,5 +1,5 @@
 <h1> Marauder's Map </h1>
-<a href="http://ahakone.github.io/mmap"> Link </a>
+<a href="http://ahakone.github.io/comp20-ahakone/mmap/"> Link </a>
 <p></p>
 
 <h4> Description </h4>
