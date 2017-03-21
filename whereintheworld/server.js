@@ -29,7 +29,6 @@ app.post('/sendLocation', function(request, response) {
 	var login = request.body.login;
 	var lat = request.body.lat;
 	var lng = request.body.lng;
-	var password = request.body.password;
 	if (login == undefined || lat == undefined || lng == undefined) {
 		response.send([]);
 	}
@@ -38,8 +37,7 @@ app.post('/sendLocation', function(request, response) {
 			"login": login,
 			"lat": parseFloat(lat),
 			"lng": parseFloat(lng),
-			"created_at": (new Date()).toJSON(),
-			"password":password
+			"created_at": (new Date()).toJSON()
 		};
 
 		db.collection('locations', function(er, collection) {

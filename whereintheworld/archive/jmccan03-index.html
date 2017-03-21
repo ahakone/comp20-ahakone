@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mmap</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWhEq5b6v6LzO6ISJO86ggchzUo3LHHp4">
+    </script>
+    <script type="text/javascript">
+
+      var myLogin = 'MegGriffin';
+      var myLat = 42.3583;        /* in case geolocation fails */
+      var myLng = -71.06027;
+      var meMark;
+
+      var map;
+
+      var data;
+
+      var distances = [];
+
+      /*-----MAP STUFF-----*/
+
+      function initialize() {
+        var mapOptions = {
+          center: { lat: myLat, lng: myLng },
+          zoom: 10
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = new google.maps.LatLng(position.coords.latitude,
+                                           position.coords.longitude);
+          map.setCenter(pos);
+          myLat = pos.lat();
+          myLng = pos.lng();
+        });
+
+        meMark = new google.maps.Marker({
+          position: { lat: myLat, lng: myLng },
+          icon: 'images/me.jpg'
+        });
+
+        meMark.setMap(map);
+
+        var infowindow = new google.maps.InfoWindow({
+          content:"Login: " + myLogin + " Latitude: " + myLat + " Longitude: " + myLng
+        });
+
+        infowindow.open(map, meMark);
+
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+      /*-----XHR STUFF-----*/
+
+      var xhr = new XMLHttpRequest();
+      var url = "https://radiant-savannah-1624.herokuapp.com/sendLocation";
+      var params = "login=" + myLogin + "&lat=" + myLat + "&lng=" + myLng;
+      xhr.open('POST', url, true);
+
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onload = function () {
+        var data = JSON.parse(xhr.responseText);
+        
+        /* characters */
+
+        for (i = 0; i < data['characters'].length; i++){
+          var chLat = data['characters'][i]['loc']['latitude'];
+          var chLng = data['characters'][i]['loc']['longitude'];
+          var chNote = data['characters'][i]['loc']['note'];
+          var chName = data['characters'][i]['name'];
+          var chIcon;
+
+          if (chName == 'carmen') chIcon = 'images/carmen.png';
+          if (chName == 'batman') chIcon = 'images/batman.png';
+          if (chName == 'hescott') chIcon = 'images/hescott.png';
+          if (chName == 'waldo') chIcon = 'images/waldo.png';
+          if (chName == 'snape') chIcon = 'images/snape.png';
+          if (chName == 'nr') chIcon = 'images/nr.png';
+
+          var chMark = new google.maps.Marker({
+            position: { lat: chLat, lng: chLng },
+            icon: chIcon
+          });
+
+          chMark.setMap(map);
+
+          var chWindow = new google.maps.InfoWindow({
+            content:"Name: " + chName + " Latitude: " + chLat + " Longitude: " + chLng + " Note: " + chNote
+          });
+
+          chWindow.open(map, chMark);
+
+          /* adds polylines */
+
+          var myLine = [meMark['position'], chMark['position']];
+          var linePath = new google.maps.Polyline({
+            path: myLine,
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.8,
+            strokeWeight: 2
+          });
+
+          linePath.setMap(map);
+
+          /* finds distance between */
+
+          Number.prototype.toRad = function() {
+            return this * Math.PI / 180;
+          }
+
+          var lat2 = myLat; 
+          var lon2 = myLng; 
+          var lat1 = chLat; 
+          var lon1 = chLng; 
+
+          var R = 6371; // km 
+          //has a problem with the .toRad() method below.
+          var x1 = lat2-lat1;
+          var dLat = x1.toRad();  
+          var x2 = lon2-lon1;
+          var dLon = x2.toRad();  
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * Math.sin(dLon/2) * Math.sin(dLon/2);  
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          var d = R * c;
+          d *= 0.621371; //to miles
+
+          distances.push({ name: chName, distance: d });
+
+        }
+
+        /* students */
+
+        for (i = 0; i < data['students'].length; i++) {
+          var stLat = data['students'][i]['lat'];
+          var stLng = data['students'][i]['lng'];
+
+          var stMark = new google.maps.Marker({
+            position: { lat: stLat, lng: stLng },
+            icon: 'images/student.jpg'
+          });
+
+          stMark.setMap(map);
+
+          var stWindow = new google.maps.InfoWindow({
+            content:"Login: " + data['students'][i]['login'] + " Latitude: " + stLat + " Longitude: " + stLng + " Timestamp: " + data['students'][i]['created_at']
+          });
+
+          stWindow.open(map, stMark);
+        }
+
+        /* sets up distance table */
+
+        var distanceTable = document.getElementById("distance-table");
+
+        distances.sort();
+        distances.reverse();
+
+        for (i = 0; i < distances.length; i++) {
+          distanceTable.innerHTML += distances[i]['name'] + ': ' + distances[i]['distance'] + ' miles</br>';
+        }
+
+      };
+
+      xhr.send(params);
+
+    </script>
+  </head>
+  <body>
+      <div id="map-canvas"></div>
+      <div id="distance-table"></div>
+  </body>
+</html>
